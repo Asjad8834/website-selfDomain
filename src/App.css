@@ -1669,3 +1669,225 @@ a {
     transition: none;
   }
 }
+/* =========================================================
+   MOBILE RESPONSIVE FIX
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* ---------- GLOBAL ---------- */
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  #root {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ---------- HERO ---------- */
+
+  .hero {
+    min-height: 100svh;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /*
+   * Keep the image centered and prevent it from becoming
+   * ridiculously zoomed on narrow screens.
+   */
+  .hero-image,
+  .hero img {
+    max-width: none;
+  }
+
+  /* ---------- HERO CONTENT ---------- */
+
+  .hero-content {
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  /* ---------- LIVE SOON ORBIT ---------- */
+
+  .orbit {
+    width: 115vw;
+    height: 115vw;
+
+    left: 50%;
+    top: 53%;
+    transform: translate(-50%, -50%);
+
+    opacity: 0.9;
+  }
+
+  /*
+   * Make the orbit text smaller on mobile.
+   */
+  .orbit text {
+    font-size: 20px;
+    letter-spacing: 4px;
+  }
+
+  /* ---------- MAIN LIVE SOON TEXT ---------- */
+
+  .live-soon {
+    font-size: clamp(58px, 17vw, 82px);
+    line-height: 0.82;
+    letter-spacing: -3px;
+
+    width: 100%;
+    text-align: center;
+
+    position: relative;
+    z-index: 5;
+  }
+
+  /* ---------- HERO SUBTEXT ---------- */
+
+  .hero-subtitle {
+    font-size: 14px;
+    line-height: 1.5;
+
+    margin-top: 22px;
+
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+  }
+
+  /* =======================================================
+     SECOND SECTION
+     ======================================================= */
+
+  .next-section {
+    min-height: auto;
+    height: auto;
+
+    padding: 90px 24px 70px;
+
+    overflow: hidden;
+  }
+
+  /*
+   * IMPORTANT:
+   * Desktop can have the phone sitting over the text.
+   * On mobile we stack them instead.
+   */
+  .next-section .phone,
+  .phone {
+    position: relative;
+
+    width: min(68vw, 270px);
+    max-width: 270px;
+
+    margin: 40px auto 50px;
+
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+
+    transform: none;
+  }
+
+  /* ---------- NEXT SECTION TEXT ---------- */
+
+  .next-section .content,
+  .next-section-content {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 0;
+
+    position: relative;
+    z-index: 3;
+  }
+
+  .next-section h1,
+  .next-section h2 {
+    font-size: clamp(42px, 12vw, 58px);
+
+    line-height: 0.95;
+    letter-spacing: -2px;
+
+    max-width: 100%;
+
+    text-align: left;
+  }
+
+  .next-section p {
+    font-size: 16px;
+    line-height: 1.6;
+
+    max-width: 100%;
+  }
+
+  /* ---------- SMALL ORANGE LABEL ---------- */
+
+  .next-section .eyebrow,
+  .next-section .label {
+    font-size: 11px;
+    letter-spacing: 3px;
+  }
+
+  /* ---------- LINKS / CONTACT ---------- */
+
+  .contact,
+  .links {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .contact a,
+  .links a {
+    font-size: 15px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+  .hero-content {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .live-soon {
+    font-size: 55px;
+  }
+
+  .orbit {
+    width: 108vw;
+    height: 108vw;
+  }
+
+  .orbit text {
+    font-size: 17px;
+    letter-spacing: 3px;
+  }
+
+  .next-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .next-section .phone,
+  .phone {
+    width: 62vw;
+    max-width: 245px;
+  }
+}
