@@ -13,7 +13,6 @@
   --body: "Instrument Sans", system-ui, sans-serif;
   --wide: "Michroma", system-ui, sans-serif;
 
-  /* Bigger orbit */
   --r: clamp(
     180px,
     min(42vw, 68svh),
@@ -33,12 +32,18 @@ html,
 body,
 #root {
   margin: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
 body {
   background: var(--bg);
   color: var(--ink);
-  font: 400 1.05rem/1.55 var(--body);
+
+  font:
+    400 1.05rem/1.55
+    var(--body);
+
   overflow-x: hidden;
 }
 
@@ -59,8 +64,10 @@ a {
 
 .hero {
   position: relative;
+
   height: 100svh;
   min-height: 600px;
+
   overflow: hidden;
 
   background:
@@ -69,25 +76,31 @@ a {
       rgba(255, 79, 0, 0.20),
       transparent 64%
     ),
+
     radial-gradient(
       32vmax 30vmax at 10% 90%,
       rgba(255, 70, 0, 0.16),
       transparent 70%
     ),
+
     radial-gradient(
       30vmax 30vmax at 92% 30%,
       rgba(111, 69, 255, 0.09),
       transparent 70%
     ),
+
     #050303;
 }
 
 
-/* subtle cinematic grain */
+/* =========================================================
+   CINEMATIC GRAIN
+   ========================================================= */
 
 .hero::before,
 .phone-section::before {
   content: "";
+
   position: absolute;
   inset: 0;
 
@@ -100,6 +113,11 @@ a {
 
   z-index: 10;
 }
+
+
+/* =========================================================
+   CURTAIN
+   ========================================================= */
 
 .curtain {
   position: absolute;
@@ -150,7 +168,8 @@ a {
   letter-spacing: -0.02em;
 
   text-shadow:
-    0 0 30px rgba(255, 102, 0, 0.25);
+    0 0 30px
+    rgba(255, 102, 0, 0.25);
 }
 
 .top-link {
@@ -227,7 +246,9 @@ a {
 }
 
 
-/* orbit container */
+/* =========================================================
+   ORBIT CONTAINER
+   ========================================================= */
 
 .tilt {
   position: absolute;
@@ -246,7 +267,9 @@ a {
 }
 
 
-/* continuous slow rotation */
+/* =========================================================
+   ORBIT ROTATION
+   ========================================================= */
 
 .ring {
   position: absolute;
@@ -268,7 +291,9 @@ a {
 }
 
 
-/* thin cinematic orbit lines */
+/* =========================================================
+   ORBIT SEGMENTS
+   ========================================================= */
 
 .seg,
 .ch {
@@ -324,7 +349,9 @@ a {
 }
 
 
-/* LIVE SOON text */
+/* =========================================================
+   ORBIT TEXT
+   ========================================================= */
 
 .ch {
   font:
@@ -358,9 +385,6 @@ a {
 
   font-stretch: expanded;
 }
-
-
-/* back-facing letters */
 
 .ch.in {
   transform:
@@ -455,7 +479,9 @@ a {
 }
 
 
-/* little scroll line */
+/* =========================================================
+   SCROLL INDICATOR
+   ========================================================= */
 
 .scroll-indicator {
   width: 1px;
@@ -490,11 +516,13 @@ a {
 
 @keyframes scrollDown {
   0% {
-    transform: translateY(-100%);
+    transform:
+      translateY(-100%);
   }
 
   100% {
-    transform: translateY(200%);
+    transform:
+      translateY(200%);
   }
 }
 
@@ -535,6 +563,11 @@ a {
     #050303;
 }
 
+
+/* =========================================================
+   STICKY
+   ========================================================= */
+
 .sticky {
   position: sticky;
 
@@ -561,7 +594,7 @@ a {
 
 
 /* =========================================================
-   PHONE
+   PHONE SCENE
    ========================================================= */
 
 .phone-scene {
@@ -576,6 +609,11 @@ a {
   perspective-origin:
     50% 42%;
 }
+
+
+/* =========================================================
+   PHONE RIG
+   ========================================================= */
 
 .phone-rig {
   position: relative;
@@ -604,7 +642,9 @@ a {
 }
 
 
-/* mouse movement */
+/* =========================================================
+   PHONE MOUSE MOVEMENT
+   ========================================================= */
 
 .tilt-m {
   --mx: 0;
@@ -629,7 +669,9 @@ a {
 }
 
 
-/* orange/violet light behind phone */
+/* =========================================================
+   PHONE HALO
+   ========================================================= */
 
 .halo {
   position: absolute;
@@ -656,7 +698,9 @@ a {
 }
 
 
-/* phone shadow */
+/* =========================================================
+   PHONE SHADOW
+   ========================================================= */
 
 .floor {
   position: absolute;
@@ -695,7 +739,9 @@ a {
 }
 
 
-/* layered titanium body */
+/* =========================================================
+   PHONE LAYERS
+   ========================================================= */
 
 .layer {
   position: absolute;
@@ -718,9 +764,6 @@ a {
     );
 }
 
-
-/* edge highlight */
-
 .layer:first-child {
   box-shadow:
 
@@ -737,7 +780,9 @@ a {
 }
 
 
-/* hardware */
+/* =========================================================
+   PHONE HARDWARE
+   ========================================================= */
 
 .hw {
   position: absolute;
@@ -755,6 +800,7 @@ a {
 .hw-a {
   left: -3px;
   top: 112px;
+
   width: 4px;
   height: 30px;
 
@@ -765,6 +811,7 @@ a {
 .hw-v1 {
   left: -3px;
   top: 168px;
+
   width: 4px;
   height: 56px;
 
@@ -775,6 +822,7 @@ a {
 .hw-v2 {
   left: -3px;
   top: 236px;
+
   width: 4px;
   height: 56px;
 
@@ -785,6 +833,7 @@ a {
 .hw-p {
   right: -3px;
   top: 190px;
+
   width: 4px;
   height: 86px;
 
@@ -794,7 +843,7 @@ a {
 
 
 /* =========================================================
-   SCREEN
+   PHONE BEZEL
    ========================================================= */
 
 .bezel {
@@ -812,6 +861,11 @@ a {
     inset 0 0 0 1px
     rgba(255,255,255,0.1);
 }
+
+
+/* =========================================================
+   PHONE SCREEN
+   ========================================================= */
 
 .screen {
   position: absolute;
@@ -834,11 +888,12 @@ a {
 }
 
 
-/* realistic screen reflection */
+/* =========================================================
+   PHONE GLARE
+   ========================================================= */
 
 .glare {
   position: absolute;
-
   inset: 5px;
 
   border-radius: 53px;
@@ -872,7 +927,9 @@ a {
 }
 
 
-/* wallpaper */
+/* =========================================================
+   WALLPAPER
+   ========================================================= */
 
 .wall {
   position: absolute;
@@ -901,7 +958,9 @@ a {
 }
 
 
-/* Dynamic Island */
+/* =========================================================
+   DYNAMIC ISLAND
+   ========================================================= */
 
 .island {
   position: absolute;
@@ -925,7 +984,9 @@ a {
 }
 
 
-/* status bar */
+/* =========================================================
+   STATUS BAR
+   ========================================================= */
 
 .status {
   position: absolute;
@@ -990,7 +1051,9 @@ a {
 }
 
 
-/* activity widget */
+/* =========================================================
+   ACTIVITY WIDGET
+   ========================================================= */
 
 .w-gh {
   background:
@@ -1041,7 +1104,9 @@ a {
 }
 
 
-/* coming soon widget */
+/* =========================================================
+   COMING NEXT WIDGET
+   ========================================================= */
 
 .w-now {
   background:
@@ -1187,7 +1252,9 @@ a {
 }
 
 
-/* app colours */
+/* =========================================================
+   APP COLORS
+   ========================================================= */
 
 .ig {
   background:
@@ -1562,7 +1629,7 @@ a {
 
 
 /* =========================================================
-   MOBILE
+   TABLET / MOBILE
    ========================================================= */
 
 @media (max-width: 860px) {
@@ -1646,6 +1713,531 @@ a {
 
 
 /* =========================================================
+   FINAL MOBILE FIX
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+
+  /* -------------------------------------------------------
+     HERO
+     ------------------------------------------------------- */
+
+  .hero {
+    height: 100svh;
+    min-height: 620px;
+
+    overflow: hidden;
+  }
+
+
+  /* -------------------------------------------------------
+     HEADER
+     ------------------------------------------------------- */
+
+  .top {
+    padding:
+      1.2rem
+      1.1rem;
+
+    z-index: 30;
+  }
+
+  .brand {
+    font-size: 0.92rem;
+  }
+
+  .top-link {
+    font-size: 0.85rem;
+
+    padding:
+      0.38rem 0.85rem;
+  }
+
+
+  /* -------------------------------------------------------
+     MAN
+     ------------------------------------------------------- */
+
+  .man {
+    top: 5svh;
+
+    /*
+     * This is deliberately smaller than the old mobile
+     * setting so the head and shoulders don't dominate
+     * the entire viewport.
+     */
+    height:
+      min(94svh, 205vw);
+
+    max-width: none;
+  }
+
+
+  /* -------------------------------------------------------
+     ORBIT
+     ------------------------------------------------------- */
+
+  :root {
+    --r:
+      clamp(
+        150px,
+        57vw,
+        250px
+      );
+  }
+
+  .tilt {
+    left: 50%;
+    top: 48%;
+
+    transform:
+      rotateZ(-8deg)
+      rotateX(-18deg);
+  }
+
+  .seg {
+    width:
+      calc(var(--r) * 0.028);
+
+    height:
+      calc(var(--r) * 0.18);
+  }
+
+  .ch {
+    font-size:
+      calc(var(--r) * 0.075);
+
+    letter-spacing:
+      0.045em;
+  }
+
+
+  /* -------------------------------------------------------
+     HERO MESSAGE
+     ------------------------------------------------------- */
+
+  .hero-message {
+    left: 50%;
+
+    bottom: 6svh;
+
+    width:
+      calc(100% - 36px);
+
+    z-index: 12;
+  }
+
+  .hero-message h1 {
+    font-size:
+      clamp(
+        3.35rem,
+        17vw,
+        5.2rem
+      );
+
+    line-height:
+      0.82;
+
+    letter-spacing:
+      -0.07em;
+  }
+
+  .hero-message p {
+    margin-top:
+      0.9rem;
+
+    font-size:
+      0.76rem;
+  }
+
+  .scroll-indicator {
+    height: 30px;
+
+    margin-top:
+      1rem;
+  }
+
+
+  /* =======================================================
+     SECOND SECTION
+     ======================================================= */
+
+  .phone-section {
+    height: 250svh;
+
+    /*
+     * Keep these as defaults.
+     * The phone-rig transform below is intentionally
+     * overridden on mobile because JS controls the desktop
+     * animation variables.
+     */
+    --ty: 0;
+    --rx: 8;
+    --ry: -14;
+    --sc: 0.58;
+    --ps: 1;
+  }
+
+
+  /* -------------------------------------------------------
+     STICKY MOBILE LAYOUT
+     ------------------------------------------------------- */
+
+  .sticky {
+    height: 100svh;
+
+    display: grid;
+
+    grid-template-columns:
+      1fr;
+
+    grid-template-rows:
+      44% 56%;
+
+    gap: 0;
+
+    padding:
+      0 20px;
+
+    align-items: start;
+
+    overflow: hidden;
+  }
+
+
+  /* -------------------------------------------------------
+     PHONE AREA
+     ------------------------------------------------------- */
+
+  .phone-scene {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+
+    place-items: center;
+
+    perspective:
+      1600px;
+
+    perspective-origin:
+      50% 45%;
+
+    overflow: visible;
+  }
+
+
+  /*
+   * IMPORTANT:
+   *
+   * On desktop, JavaScript moves the phone vertically
+   * using --ty.
+   *
+   * On mobile, that desktop movement would push the
+   * phone completely out of the viewport.
+   *
+   * Therefore we intentionally use a fixed mobile
+   * transform here.
+   */
+  .phone-rig {
+    width: 300px;
+    height: 620px;
+
+    transform:
+      translateY(-18px)
+      scale(0.52)
+      rotateX(8deg)
+      rotateY(-14deg) !important;
+
+    transform-origin:
+      center center;
+
+    flex-shrink: 0;
+  }
+
+
+  /*
+   * Keep the phone itself at its original size.
+   * We scale the RIG, not the phone.
+   */
+  .phone {
+    position: absolute;
+
+    inset: 0;
+
+    width: 300px;
+    height: 620px;
+  }
+
+
+  /* smaller halo so it doesn't wash over the text */
+
+  .halo {
+    inset: -100px;
+
+    opacity: 0.75;
+  }
+
+
+  /* -------------------------------------------------------
+     ABOUT CONTENT
+     ------------------------------------------------------- */
+
+  .about {
+    width: 100%;
+    max-width: 100%;
+
+    justify-self: center;
+    align-self: start;
+
+    padding:
+      10px 0 24px;
+
+    position: relative;
+
+    z-index: 8;
+  }
+
+  .section-kicker {
+    margin-bottom:
+      0.75rem;
+
+    font-size:
+      0.58rem;
+
+    letter-spacing:
+      0.18em;
+
+    white-space: nowrap;
+  }
+
+  .about h2 {
+    margin:
+      0 0 1rem;
+
+    font-size:
+      clamp(
+        2rem,
+        9.5vw,
+        2.8rem
+      );
+
+    line-height:
+      0.95;
+
+    letter-spacing:
+      -0.05em;
+  }
+
+  .about p {
+    margin:
+      0 0 0.85rem;
+
+    font-size:
+      0.88rem;
+
+    line-height:
+      1.52;
+
+    max-width: 100%;
+  }
+
+
+  /* -------------------------------------------------------
+     CONTACT LINKS
+     ------------------------------------------------------- */
+
+  .contact {
+    width: 100%;
+
+    margin:
+      1.15rem 0 0;
+  }
+
+  .contact a {
+    min-height: 48px;
+
+    padding:
+      0.72rem 0.15rem;
+
+    font-size:
+      0.82rem;
+
+    gap:
+      0.5rem;
+  }
+
+  .contact a:hover {
+    padding-inline:
+      0.15rem;
+  }
+
+  .contact span:last-child {
+    max-width: 62%;
+
+    text-align: right;
+
+    overflow-wrap:
+      anywhere;
+  }
+
+
+  /* -------------------------------------------------------
+     FOOTER
+     ------------------------------------------------------- */
+
+  .footer {
+    padding:
+      1.5rem 1rem;
+
+    font-size:
+      0.7rem;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+  .hero {
+    min-height: 600px;
+  }
+
+  .top {
+    padding:
+      1rem;
+  }
+
+  .brand {
+    font-size:
+      0.86rem;
+  }
+
+  .top-link {
+    font-size:
+      0.8rem;
+
+    padding:
+      0.35rem 0.75rem;
+  }
+
+
+  /* hero image */
+
+  .man {
+    top: 5svh;
+
+    height:
+      min(90svh, 205vw);
+  }
+
+
+  /* orbit */
+
+  :root {
+    --r:
+      142px;
+  }
+
+  .ch {
+    font-size:
+      calc(var(--r) * 0.073);
+
+    letter-spacing:
+      0.04em;
+  }
+
+
+  /* hero text */
+
+  .hero-message {
+    width:
+      calc(100% - 30px);
+
+    bottom:
+      5.5svh;
+  }
+
+  .hero-message h1 {
+    font-size:
+      3.25rem;
+  }
+
+  .hero-message p {
+    font-size:
+      0.72rem;
+  }
+
+
+  /* second section */
+
+  .sticky {
+    grid-template-rows:
+      43% 57%;
+
+    padding-inline:
+      17px;
+  }
+
+  .phone-rig {
+    transform:
+      translateY(-12px)
+      scale(0.47)
+      rotateX(8deg)
+      rotateY(-14deg) !important;
+  }
+
+  .about {
+    padding-top:
+      6px;
+  }
+
+  .section-kicker {
+    font-size:
+      0.54rem;
+  }
+
+  .about h2 {
+    font-size:
+      1.95rem;
+  }
+
+  .about p {
+    font-size:
+      0.84rem;
+
+    line-height:
+      1.48;
+  }
+
+  .contact {
+    margin-top:
+      0.9rem;
+  }
+
+  .contact a {
+    font-size:
+      0.78rem;
+
+    min-height:
+      44px;
+  }
+}
+
+
+/* =========================================================
    REDUCED MOTION
    ========================================================= */
 
@@ -1667,227 +2259,5 @@ a {
 
   .tilt-m {
     transition: none;
-  }
-}
-/* =========================================================
-   MOBILE RESPONSIVE FIX
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-  /* ---------- GLOBAL ---------- */
-
-  html,
-  body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
-  #root {
-    width: 100%;
-    overflow-x: hidden;
-  }
-
-  /* ---------- HERO ---------- */
-
-  .hero {
-    min-height: 100svh;
-    height: auto;
-    overflow: hidden;
-    position: relative;
-  }
-
-  /*
-   * Keep the image centered and prevent it from becoming
-   * ridiculously zoomed on narrow screens.
-   */
-  .hero-image,
-  .hero img {
-    max-width: none;
-  }
-
-  /* ---------- HERO CONTENT ---------- */
-
-  .hero-content {
-    width: 100%;
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  /* ---------- LIVE SOON ORBIT ---------- */
-
-  .orbit {
-    width: 115vw;
-    height: 115vw;
-
-    left: 50%;
-    top: 53%;
-    transform: translate(-50%, -50%);
-
-    opacity: 0.9;
-  }
-
-  /*
-   * Make the orbit text smaller on mobile.
-   */
-  .orbit text {
-    font-size: 20px;
-    letter-spacing: 4px;
-  }
-
-  /* ---------- MAIN LIVE SOON TEXT ---------- */
-
-  .live-soon {
-    font-size: clamp(58px, 17vw, 82px);
-    line-height: 0.82;
-    letter-spacing: -3px;
-
-    width: 100%;
-    text-align: center;
-
-    position: relative;
-    z-index: 5;
-  }
-
-  /* ---------- HERO SUBTEXT ---------- */
-
-  .hero-subtitle {
-    font-size: 14px;
-    line-height: 1.5;
-
-    margin-top: 22px;
-
-    max-width: 280px;
-    margin-left: auto;
-    margin-right: auto;
-
-    text-align: center;
-  }
-
-  /* =======================================================
-     SECOND SECTION
-     ======================================================= */
-
-  .next-section {
-    min-height: auto;
-    height: auto;
-
-    padding: 90px 24px 70px;
-
-    overflow: hidden;
-  }
-
-  /*
-   * IMPORTANT:
-   * Desktop can have the phone sitting over the text.
-   * On mobile we stack them instead.
-   */
-  .next-section .phone,
-  .phone {
-    position: relative;
-
-    width: min(68vw, 270px);
-    max-width: 270px;
-
-    margin: 40px auto 50px;
-
-    left: auto;
-    right: auto;
-    top: auto;
-    bottom: auto;
-
-    transform: none;
-  }
-
-  /* ---------- NEXT SECTION TEXT ---------- */
-
-  .next-section .content,
-  .next-section-content {
-    width: 100%;
-    max-width: 100%;
-
-    padding: 0;
-
-    position: relative;
-    z-index: 3;
-  }
-
-  .next-section h1,
-  .next-section h2 {
-    font-size: clamp(42px, 12vw, 58px);
-
-    line-height: 0.95;
-    letter-spacing: -2px;
-
-    max-width: 100%;
-
-    text-align: left;
-  }
-
-  .next-section p {
-    font-size: 16px;
-    line-height: 1.6;
-
-    max-width: 100%;
-  }
-
-  /* ---------- SMALL ORANGE LABEL ---------- */
-
-  .next-section .eyebrow,
-  .next-section .label {
-    font-size: 11px;
-    letter-spacing: 3px;
-  }
-
-  /* ---------- LINKS / CONTACT ---------- */
-
-  .contact,
-  .links {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .contact a,
-  .links a {
-    font-size: 15px;
-  }
-}
-
-
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 390px) {
-
-  .hero-content {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-
-  .live-soon {
-    font-size: 55px;
-  }
-
-  .orbit {
-    width: 108vw;
-    height: 108vw;
-  }
-
-  .orbit text {
-    font-size: 17px;
-    letter-spacing: 3px;
-  }
-
-  .next-section {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .next-section .phone,
-  .phone {
-    width: 62vw;
-    max-width: 245px;
   }
 }
