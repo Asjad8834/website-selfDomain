@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import { Analytics } from '@vercel/analytics/react';
 
 /* ---------- EDIT THESE ---------- */
 
@@ -785,6 +786,7 @@ export default function App() {
     <>
       <Hero />
       <Contact />
+      <Analytics />
 
       <footer className="footer">
         A little something is coming.
