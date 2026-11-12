@@ -2,2262 +2,267 @@
   --bg: #050303;
   --ink: #f7f1ea;
   --muted: #9d918a;
-
-  --orange: #ff6a00;
-  --orange-hot: #ff9b42;
-
   --violet: #9d7cff;
-  --blue: #8ca7ff;
 
   --display: "Bricolage Grotesque", system-ui, sans-serif;
   --body: "Instrument Sans", system-ui, sans-serif;
   --wide: "Michroma", system-ui, sans-serif;
 
-  --r: clamp(
-    180px,
-    min(42vw, 68svh),
-    760px
-  );
+  --r: clamp(180px, min(42vw, 68svh), 760px); /* orbit radius */
+  --man-h: min(118svh, 205vw);
+  --man-top: 1svh;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html, body, #root { margin: 0; width: 100%; min-height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 400 1.05rem/1.55 var(--body); overflow-x: hidden; }
+a { color: inherit; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; border-radius: 6px; }
 
-html {
-  scroll-behavior: smooth;
-}
-
-html,
-body,
-#root {
-  margin: 0;
-  width: 100%;
-  min-height: 100%;
-}
-
-body {
-  background: var(--bg);
-  color: var(--ink);
-
-  font:
-    400 1.05rem/1.55
-    var(--body);
-
-  overflow-x: hidden;
-}
-
-a {
-  color: inherit;
-}
-
-:focus-visible {
-  outline: 2px solid var(--violet);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
+/* ================= HERO ================= */
 .hero {
   position: relative;
-
-  height: 100svh;
-  min-height: 600px;
-
+  height: 100vh; height: 100svh; min-height: 600px;
   overflow: hidden;
-
   background:
-    radial-gradient(
-      48vmax 50vmax at 50% 48%,
-      rgba(255, 79, 0, 0.20),
-      transparent 64%
-    ),
-
-    radial-gradient(
-      32vmax 30vmax at 10% 90%,
-      rgba(255, 70, 0, 0.16),
-      transparent 70%
-    ),
-
-    radial-gradient(
-      30vmax 30vmax at 92% 30%,
-      rgba(111, 69, 255, 0.09),
-      transparent 70%
-    ),
-
+    radial-gradient(48vmax 50vmax at 50% 48%, rgba(255, 79, 0, .20), transparent 64%),
+    radial-gradient(32vmax 30vmax at 10% 90%, rgba(255, 70, 0, .16), transparent 70%),
+    radial-gradient(30vmax 30vmax at 92% 30%, rgba(111, 69, 255, .09), transparent 70%),
     #050303;
 }
+.hero.paused .ring { animation-play-state: paused; }
 
-
-/* =========================================================
-   CINEMATIC GRAIN
-   ========================================================= */
-
-.hero::before,
-.phone-section::before {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  opacity: 0.055;
-
-  pointer-events: none;
-
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
-
-  z-index: 10;
+/* film grain (desktop only, one static layer) */
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 10; pointer-events: none; opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
 }
 
-
-/* =========================================================
-   CURTAIN
-   ========================================================= */
-
-.curtain {
-  position: absolute;
-  inset: 0;
-
-  background: #050303;
-
-  z-index: 20;
-
-  pointer-events: none;
-
-  animation:
-    curtain 1.8s 0.1s ease forwards;
-}
-
-@keyframes curtain {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-
-/* =========================================================
-   HEADER
-   ========================================================= */
+.curtain { position: absolute; inset: 0; z-index: 20; pointer-events: none; background: #050303; animation: curtain 1.6s .1s ease forwards; }
+@keyframes curtain { to { opacity: 0; visibility: hidden; } }
 
 .top {
-  position: absolute;
-  inset: 0 0 auto 0;
-
-  z-index: 15;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding:
-    1.4rem
-    clamp(1.2rem, 4vw, 3rem);
+  position: absolute; inset: 0 0 auto 0; z-index: 15;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: calc(1.4rem + env(safe-area-inset-top)) clamp(1.2rem, 4vw, 3rem) 1.4rem;
 }
-
-.brand {
-  font:
-    800 1.05rem
-    var(--display);
-
-  letter-spacing: -0.02em;
-
-  text-shadow:
-    0 0 30px
-    rgba(255, 102, 0, 0.25);
-}
-
+.brand { font: 800 1.05rem var(--display); letter-spacing: -.02em; }
 .top-link {
-  text-decoration: none;
-
-  color: #c7bbb4;
-
-  padding:
-    0.42rem 1rem;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.15);
-
-  border-radius: 999px;
-
-  backdrop-filter: blur(12px);
-
-  transition:
-    0.25s ease;
+  text-decoration: none; color: #c7bbb4; padding: .42rem 1rem;
+  border: 1px solid rgba(255, 255, 255, .15); border-radius: 999px;
+  background: rgba(10, 6, 5, .5); transition: color .25s, border-color .25s;
 }
+.top-link:hover { color: #fff; border-color: rgba(255, 126, 46, .7); }
 
-.top-link:hover {
-  color: white;
-
-  border-color:
-    rgba(255, 126, 46, 0.7);
-
-  box-shadow:
-    0 0 30px
-    rgba(255, 87, 0, 0.15);
+/* ---- man: 2D backdrop + 3D cutout so the ring can pass behind him ---- */
+.backdrop, .plane {
+  position: absolute; left: 50%; top: var(--man-top);
+  height: var(--man-h); width: auto; max-width: none;
+  transform: translateX(-50%);
+  user-select: none; -webkit-user-drag: none; pointer-events: none;
 }
+.plane { transform: translateX(-50%) translateZ(.1px); }
 
-
-/* =========================================================
-   MAN + ORBIT
-   ========================================================= */
-
-.scene {
-  position: absolute;
-  inset: 0;
-
-  perspective: 1500px;
-  perspective-origin: 50% 47%;
-
-  transform-style: preserve-3d;
-}
-
-.man {
-  position: absolute;
-
-  left: 50%;
-  top: 1svh;
-
-  height:
-    min(118svh, 205vw);
-
-  width: auto;
-
-  transform:
-    translateX(-50%)
-    translateZ(0.1px);
-
-  user-select: none;
-  pointer-events: none;
-
-  filter:
-    contrast(1.08)
-    saturate(0.95)
-    drop-shadow(
-      0 0 40px
-      rgba(255, 72, 0, 0.14)
-    );
-}
-
-
-/* =========================================================
-   ORBIT CONTAINER
-   ========================================================= */
-
+.scene { position: absolute; inset: 0; perspective: 1500px; perspective-origin: 50% 47%; transform-style: preserve-3d; }
 .tilt {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 0;
-  height: 0;
-
-  transform-style: preserve-3d;
-
-  transform:
-    rotateZ(-10deg)
-    rotateX(-20deg);
+  position: absolute; left: 50%; top: 50%; width: 0; height: 0;
+  transform-style: preserve-3d; transform: rotateZ(-10deg) rotateX(-20deg);
 }
+.ring { position: absolute; left: 0; top: 0; transform-style: preserve-3d; animation: orbit 30s linear infinite; will-change: transform; }
+@keyframes orbit { to { transform: rotateY(360deg); } }
 
-
-/* =========================================================
-   ORBIT ROTATION
-   ========================================================= */
-
-.ring {
-  position: absolute;
-
-  left: 0;
-  top: 0;
-
-  transform-style: preserve-3d;
-
-  animation:
-    orbit 30s linear infinite;
-}
-
-@keyframes orbit {
-  to {
-    transform:
-      rotateY(360deg);
-  }
-}
-
-
-/* =========================================================
-   ORBIT SEGMENTS
-   ========================================================= */
-
-.seg,
-.ch {
-  position: absolute;
-
-  left: 0;
-  top: 0;
-
-  transform-origin: 0 0;
-}
-
+.seg, .ch { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 .seg {
-  width:
-    calc(var(--r) * 0.038);
-
-  height:
-    calc(var(--r) * 0.20);
-
-  transform:
-    rotateY(var(--a))
-    translateZ(var(--r))
-    translate(-50%, -50%);
-
+  width: calc(var(--r) * .108); height: calc(var(--r) * .20);
+  transform: rotateY(var(--a)) translateZ(var(--r)) translate(-50%, -50%);
   background:
-    linear-gradient(
-      180deg,
-
-      #ffb066 0,
-
-      #ff7a18 2px,
-
-      rgba(255, 120, 30, 0.25) 4px,
-
-      transparent 17px,
-
-      transparent
-        calc(100% - 17px),
-
-      rgba(145, 112, 255, 0.35)
-        calc(100% - 4px),
-
-      #a889ff
-        calc(100% - 2px)
-    );
-
-  opacity: 0.78;
-
-  filter:
-    drop-shadow(
-      0 0 7px
-      rgba(255, 100, 20, 0.35)
-    );
+    linear-gradient(180deg, #ffb066 0, #ff7a18 2px, rgba(255, 120, 30, .25) 4px, transparent 17px,
+      transparent calc(100% - 17px), rgba(145, 112, 255, .35) calc(100% - 4px), #a889ff calc(100% - 2px)),
+    linear-gradient(180deg, rgba(110, 70, 200, .06), rgba(70, 40, 150, .12));
+  backface-visibility: visible;
 }
-
-
-/* =========================================================
-   ORBIT TEXT
-   ========================================================= */
-
 .ch {
-  font:
-    400 calc(var(--r) * 0.095)
-    var(--wide);
-
-  letter-spacing:
-    0.075em;
-
-  white-space: pre;
-
-  backface-visibility: hidden;
-
-  color: #f4edff;
-
-  text-shadow:
-    0 0 12px
-      rgba(157, 124, 255, 1),
-
-    0 0 30px
-      rgba(157, 124, 255, 0.75),
-
-    0 0 65px
-      rgba(125, 91, 255, 0.35);
-
-  transform:
-    rotateY(var(--a))
-    translateZ(calc(var(--r) + 2px))
-    skewX(-12deg)
-    translate(-50%, -50%);
-
-  font-stretch: expanded;
+  font: 400 calc(var(--r) * .095) var(--wide); letter-spacing: .075em; white-space: pre;
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  color: #f4edff; text-shadow: 0 0 14px rgba(157, 124, 255, .9);
+  transform: rotateY(var(--a)) translateZ(calc(var(--r) + 2px)) skewX(-12deg) translate(-50%, -50%);
 }
 
-.ch.in {
-  transform:
-    rotateY(var(--a))
-    translateZ(calc(var(--r) - 2px))
-    rotateY(180deg)
-    skewX(-12deg)
-    translate(-50%, -50%);
-}
-
-
-/* =========================================================
-   HERO MESSAGE
-   ========================================================= */
-
+/* ---- hero text ---- */
 .hero-message {
-  position: absolute;
-
-  left: 50%;
-  bottom: 7svh;
-
-  transform:
-    translateX(-50%);
-
-  z-index: 8;
-
-  width: min(90vw, 600px);
-
-  text-align: center;
-
-  pointer-events: none;
+  position: absolute; left: 50%; bottom: 7svh; transform: translateX(-50%);
+  z-index: 8; width: min(90vw, 600px); text-align: center; pointer-events: none;
 }
-
-.eyebrow {
-  display: block;
-
-  margin-bottom: 0.9rem;
-
-  font:
-    500 0.68rem
-    var(--wide);
-
-  letter-spacing:
-    0.24em;
-
-  color:
-    rgba(255, 159, 94, 0.72);
-}
-
 .hero-message h1 {
-  margin: 0;
-
-  font:
-    800 clamp(3.8rem, 10vw, 8rem)
-    /
-    0.82
-    var(--display);
-
-  letter-spacing:
-    -0.075em;
-
-  background:
-    linear-gradient(
-      180deg,
-      #fff,
-      #e8d8d0 55%,
-      #a89b96
-    );
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  color: transparent;
-
-  text-shadow:
-    0 0 55px
-    rgba(255, 75, 0, 0.12);
+  margin: 0; font: 800 clamp(3.8rem, 10vw, 8rem) / .82 var(--display); letter-spacing: -.075em;
+  background: linear-gradient(180deg, #fff, #e8d8d0 55%, #a89b96);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-
-.hero-message p {
-  margin:
-    1.1rem 0 0;
-
-  color:
-    rgba(220, 208, 202, 0.55);
-
-  font-size:
-    0.9rem;
-
-  letter-spacing:
-    0.04em;
-}
-
-
-/* =========================================================
-   SCROLL INDICATOR
-   ========================================================= */
-
+.hero-message p { margin: 1.1rem 0 0; color: rgba(220, 208, 202, .55); font-size: .9rem; letter-spacing: .04em; }
 .scroll-indicator {
-  width: 1px;
-  height: 38px;
-
-  margin:
-    1.4rem auto 0;
-
-  overflow: hidden;
-
-  background:
-    linear-gradient(
-      transparent,
-      rgba(255, 119, 40, 0.9),
-      transparent
-    );
+  width: 1px; height: 38px; margin: 1.4rem auto 0; overflow: hidden;
+  background: linear-gradient(transparent, rgba(255, 119, 40, .9), transparent);
 }
+.scroll-indicator span { display: block; width: 100%; height: 50%; background: #fff; animation: scrollDown 2s ease-in-out infinite; }
+@keyframes scrollDown { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
 
-.scroll-indicator span {
-  display: block;
-
-  width: 100%;
-  height: 50%;
-
-  background:
-    #fff;
-
-  animation:
-    scrollDown 2s
-    ease-in-out infinite;
-}
-
-@keyframes scrollDown {
-  0% {
-    transform:
-      translateY(-100%);
-  }
-
-  100% {
-    transform:
-      translateY(200%);
-  }
-}
-
-
-/* =========================================================
-   PHONE SECTION
-   ========================================================= */
-
+/* ================= PHONE SECTION ================= */
 .phone-section {
-  --ty: 700;
-  --rx: 62;
-  --ry: -68;
-  --sc: 0.7;
-  --ps: 1;
-  --t: 0;
-
-  position: relative;
-
-  height: 260svh;
-
+  position: relative; height: 260vh; height: 260svh;
   background:
-    radial-gradient(
-      42vmax 42vmax
-      at 25% 50%,
-
-      rgba(255, 90, 20, 0.15),
-      transparent 70%
-    ),
-
-    radial-gradient(
-      38vmax 38vmax
-      at 80% 55%,
-
-      rgba(122, 86, 255, 0.11),
-      transparent 70%
-    ),
-
+    radial-gradient(42vmax 42vmax at 25% 50%, rgba(255, 90, 20, .15), transparent 70%),
+    radial-gradient(38vmax 38vmax at 80% 55%, rgba(122, 86, 255, .11), transparent 70%),
     #050303;
 }
-
-
-/* =========================================================
-   STICKY
-   ========================================================= */
-
 .sticky {
-  position: sticky;
-
-  top: 0;
-
-  height: 100svh;
-
-  overflow: hidden;
-
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1fr);
-
-  align-items: center;
-
-  gap:
-    clamp(1rem, 5vw, 5rem);
-
-  padding-inline:
-    clamp(1.2rem, 6vw, 6rem);
+  position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center;
+  gap: clamp(1rem, 5vw, 5rem); padding-inline: clamp(1.2rem, 6vw, 6rem);
 }
+.phone-scene { position: relative; height: 100%; perspective: 1800px; perspective-origin: 50% 42%; }
 
-
-/* =========================================================
-   PHONE SCENE
-   ========================================================= */
-
-.phone-scene {
-  height: 100%;
-
-  display: grid;
-
-  place-items: center;
-
-  perspective: 1800px;
-
-  perspective-origin:
-    50% 42%;
-}
-
-
-/* =========================================================
-   PHONE RIG
-   ========================================================= */
-
+/* transform is written by JS (see usePhoneScroll) */
 .phone-rig {
-  position: relative;
-
-  width: 300px;
-  height: 620px;
-
-  transform-style: preserve-3d;
-
-  transform:
-    translateY(
-      calc(var(--ty) * 1px)
-    )
-
-    scale(
-      calc(var(--sc) * var(--ps))
-    )
-
-    rotateX(
-      calc(var(--rx) * 1deg)
-    )
-
-    rotateY(
-      calc(var(--ry) * 1deg)
-    );
+  position: absolute; left: 50%; top: 50%; margin: -310px 0 0 -150px;
+  width: 300px; height: 620px; transform-style: preserve-3d;
+  transform: translate3d(0, 700px, 0) scale(.7) rotateX(62deg) rotateY(-68deg);
+  will-change: transform;
 }
+.tilt-m { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .25s ease-out; }
 
-
-/* =========================================================
-   PHONE MOUSE MOVEMENT
-   ========================================================= */
-
-.tilt-m {
-  --mx: 0;
-  --my: 0;
-
-  position: absolute;
-  inset: 0;
-
-  transform-style: preserve-3d;
-
-  transform:
-    rotateY(
-      calc(var(--mx) * 1deg)
-    )
-
-    rotateX(
-      calc(var(--my) * 1deg)
-    );
-
-  transition:
-    transform 0.25s ease-out;
-}
-
-
-/* =========================================================
-   PHONE HALO
-   ========================================================= */
-
-.halo {
-  position: absolute;
-
-  inset: -180px;
-
-  background:
-    radial-gradient(
-      closest-side,
-
-      rgba(255, 103, 22, 0.28),
-
-      rgba(151, 113, 255, 0.12)
-        50%,
-
-      transparent 73%
-    );
-
-  filter:
-    blur(12px);
-
-  transform:
-    translateZ(-70px);
-}
-
-
-/* =========================================================
-   PHONE SHADOW
-   ========================================================= */
-
-.floor {
-  position: absolute;
-
-  left: 50%;
-  bottom: -52px;
-
-  width: 360px;
-  height: 50px;
-
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(0, 0, 0, 0.85),
-      transparent 68%
-    );
-
-  filter:
-    blur(6px);
-
-  transform:
-    translateX(-50%)
-    translateZ(-40px);
-}
-
-
-/* =========================================================
-   PHONE BODY
-   ========================================================= */
-
-.phone {
-  position: absolute;
-  inset: 0;
-
-  transform-style: preserve-3d;
-}
-
-
-/* =========================================================
-   PHONE LAYERS
-   ========================================================= */
-
+.halo { position: absolute; inset: -180px; background: radial-gradient(closest-side, rgba(255, 103, 22, .26), rgba(151, 113, 255, .11) 50%, transparent 73%); transform: translateZ(-70px); }
+.phone { position: absolute; inset: 0; transform-style: preserve-3d; }
 .layer {
-  position: absolute;
-  inset: 0;
-
-  border-radius: 58px;
-
-  transform:
-    translateZ(var(--z));
-
-  background:
-    linear-gradient(
-      135deg,
-
-      #b3aaa1 0%,
-      #514b46 22%,
-      #918981 47%,
-      #272421 75%,
-      #6f675f 100%
-    );
+  position: absolute; inset: 0; border-radius: 58px; transform: translateZ(var(--z));
+  background: linear-gradient(135deg, #b3aaa1 0%, #514b46 22%, #918981 47%, #272421 75%, #6f675f 100%);
 }
+.layer:first-child { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .38), 0 0 30px rgba(0, 0, 0, .5); }
 
-.layer:first-child {
-  box-shadow:
+.hw { position: absolute; background: linear-gradient(90deg, #777069, #332f2c); border-radius: 2px; width: 4px; transform: translateZ(-9px); }
+.hw-a { left: -3px; top: 112px; height: 30px; }
+.hw-v1 { left: -3px; top: 168px; height: 56px; }
+.hw-v2 { left: -3px; top: 236px; height: 56px; }
+.hw-p { right: -3px; top: 190px; height: 86px; }
 
-    inset
-    0 0 0 1px
-    rgba(255,255,255,0.38),
-
-    inset
-    0 0 30px
-    rgba(255,255,255,0.06),
-
-    0 0 30px
-    rgba(0,0,0,0.5);
-}
-
-
-/* =========================================================
-   PHONE HARDWARE
-   ========================================================= */
-
-.hw {
-  position: absolute;
-
-  background:
-    linear-gradient(
-      90deg,
-      #777069,
-      #332f2c
-    );
-
-  border-radius: 2px;
-}
-
-.hw-a {
-  left: -3px;
-  top: 112px;
-
-  width: 4px;
-  height: 30px;
-
-  transform:
-    translateZ(-9px);
-}
-
-.hw-v1 {
-  left: -3px;
-  top: 168px;
-
-  width: 4px;
-  height: 56px;
-
-  transform:
-    translateZ(-9px);
-}
-
-.hw-v2 {
-  left: -3px;
-  top: 236px;
-
-  width: 4px;
-  height: 56px;
-
-  transform:
-    translateZ(-9px);
-}
-
-.hw-p {
-  right: -3px;
-  top: 190px;
-
-  width: 4px;
-  height: 86px;
-
-  transform:
-    translateZ(-9px);
-}
-
-
-/* =========================================================
-   PHONE BEZEL
-   ========================================================= */
-
-.bezel {
-  position: absolute;
-  inset: 5px;
-
-  border-radius: 53px;
-
-  background: #020202;
-
-  transform:
-    translateZ(0.6px);
-
-  box-shadow:
-    inset 0 0 0 1px
-    rgba(255,255,255,0.1);
-}
-
-
-/* =========================================================
-   PHONE SCREEN
-   ========================================================= */
-
-.screen {
-  position: absolute;
-  inset: 6px;
-
-  border-radius: 47px;
-
-  overflow: hidden;
-
-  background: #000;
-
-  color: #fff;
-
-  font-family:
-    var(--body);
-
-  box-shadow:
-    inset 0 0 0 1px
-    rgba(255,255,255,0.07);
-}
-
-
-/* =========================================================
-   PHONE GLARE
-   ========================================================= */
-
+.bezel { position: absolute; inset: 5px; border-radius: 53px; background: #020202; transform: translateZ(.6px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.screen { position: absolute; inset: 6px; border-radius: 47px; overflow: hidden; background: #000; color: #fff; font-family: var(--body); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07); }
 .glare {
-  position: absolute;
-  inset: 5px;
-
-  border-radius: 53px;
-
-  pointer-events: none;
-
-  transform:
-    translateZ(1.2px);
-
-  background:
-    linear-gradient(
-      115deg,
-
-      transparent 30%,
-
-      rgba(255,255,255,0.16)
-        44%,
-
-      transparent 58%
-    );
-
-  background-size:
-    260% 100%;
-
-  background-position:
-    calc(50% + var(--ry) * 3%)
-    0;
-
-  mix-blend-mode:
-    screen;
+  position: absolute; inset: 5px; border-radius: 53px; pointer-events: none; transform: translateZ(1.2px);
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .15) 44%, transparent 58%);
+  background-size: 260% 100%; background-position: 50% 0;
 }
-
-
-/* =========================================================
-   WALLPAPER
-   ========================================================= */
 
 .wall {
-  position: absolute;
-  inset: 0;
-
+  position: absolute; inset: 0;
   background:
-
-    radial-gradient(
-      100% 65% at 52% 15%,
-      rgba(255, 94, 29, 0.55),
-      transparent 50%
-    ),
-
-    radial-gradient(
-      75% 65% at 50% 100%,
-      rgba(87, 49, 150, 0.26),
-      transparent 58%
-    ),
-
-    linear-gradient(
-      145deg,
-      #160a07,
-      #050505 48%,
-      #090509
-    );
+    radial-gradient(100% 65% at 52% 15%, rgba(255, 94, 29, .55), transparent 50%),
+    radial-gradient(75% 65% at 50% 100%, rgba(87, 49, 150, .26), transparent 58%),
+    linear-gradient(145deg, #160a07, #050505 48%, #090509);
 }
-
-
-/* =========================================================
-   DYNAMIC ISLAND
-   ========================================================= */
-
-.island {
-  position: absolute;
-
-  top: 11px;
-  left: 50%;
-
-  width: 92px;
-  height: 27px;
-
-  border-radius: 20px;
-
-  background: #000;
-
-  transform:
-    translateX(-50%);
-
-  box-shadow:
-    0 0 0 1px
-    rgba(255,255,255,0.025);
-}
-
-
-/* =========================================================
-   STATUS BAR
-   ========================================================= */
-
-.status {
-  position: absolute;
-
-  top: 15px;
-
-  inset-inline: 28px;
-
-  display: flex;
-
-  justify-content:
-    space-between;
-
-  font-size: 12.5px;
-
-  font-weight: 600;
-}
-
-
-/* =========================================================
-   WIDGETS
-   ========================================================= */
-
-.widgets {
-  position: absolute;
-
-  top: 58px;
-
-  inset-inline: 14px;
-
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap: 12px;
-}
-
-.wcol {
-  text-decoration: none;
-
-  display: grid;
-
-  gap: 5px;
-}
-
-.w {
-  height: 124px;
-
-  border-radius: 22px;
-
-  padding: 11px;
-
-  overflow: hidden;
-
-  box-shadow:
-    inset 0 0 0 1px
-    rgba(255,255,255,0.12),
-
-    0 8px 25px
-    rgba(0,0,0,0.25);
-}
-
-
-/* =========================================================
-   ACTIVITY WIDGET
-   ========================================================= */
-
-.w-gh {
-  background:
-    linear-gradient(
-      145deg,
-      #f9f9f9,
-      #dedede
-    );
-
-  display: grid;
-
-  place-items: center;
-}
-
-.grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(7, 1fr);
-
-  gap: 3px;
-
-  width: 100%;
-}
-
-.grid u {
-  aspect-ratio: 1;
-
-  border-radius: 2.5px;
-
-  background: #ebedf0;
-}
-
-.grid .c1 {
-  background: #9be9a8;
-}
-
-.grid .c2 {
-  background: #40c463;
-}
-
-.grid .c3 {
-  background: #30a14e;
-}
-
-.grid .c4 {
-  background: #216e39;
-}
-
-
-/* =========================================================
-   COMING NEXT WIDGET
-   ========================================================= */
-
-.w-now {
-  background:
-    linear-gradient(
-      150deg,
-      #d85220,
-      #7136c7
-    );
-
-  display: grid;
-
-  align-content:
-    space-between;
-
-  box-shadow:
-    inset 0 0 30px
-    rgba(255,255,255,0.08);
-}
-
-.w-now small {
-  font-size: 9px;
-
-  letter-spacing:
-    0.12em;
-
-  opacity: 0.75;
-}
-
-.w-now strong {
-  font:
-    800 15px/1.1
-    var(--display);
-}
-
-.w-now em {
-  font-size: 10px;
-
-  font-style: normal;
-
-  opacity: 0.82;
-}
-
-.bar {
-  height: 4px;
-
-  border-radius: 4px;
-
-  background:
-    rgba(255,255,255,0.25);
-
-  overflow: hidden;
-}
-
-.bar i {
-  display: block;
-
-  width: 72%;
-  height: 100%;
-
-  background: #fff;
-
-  border-radius: 4px;
-}
-
-.wl {
-  font-size: 10px;
-
-  text-align: center;
-
-  color:
-    rgba(255,255,255,0.72);
-}
-
-
-/* =========================================================
-   PHONE APPS
-   ========================================================= */
-
-.icons {
-  position: absolute;
-
-  top: 224px;
-
-  inset-inline: 14px;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  gap: 14px 6px;
-}
-
-.app {
-  display: grid;
-
-  justify-items: center;
-
-  gap: 5px;
-
-  text-decoration: none;
-
-  font-size: 9.5px;
-
-  color:
-    rgba(255,255,255,0.9);
-
-  transition:
-    transform 0.18s ease;
-}
-
-.app:hover {
-  transform:
-    translateY(-3px)
-    scale(1.06);
-}
-
-.app i {
-  width: 54px;
-  height: 54px;
-
-  border-radius: 15px;
-
-  display: grid;
-
-  place-items: center;
-
-  box-shadow:
-
-    0 5px 14px
-    rgba(0,0,0,0.45),
-
-    inset 0 0 0 1px
-    rgba(255,255,255,0.18);
-}
-
-.glyph {
-  font:
-    800 19px
-    var(--display);
-
-  color: #fff;
-}
-
-
-/* =========================================================
-   APP COLORS
-   ========================================================= */
-
-.ig {
-  background:
-    radial-gradient(
-      circle at 30% 105%,
-      #feda75 0,
-      #fa7e1e 25%,
-      #d62976 50%,
-      #962fbf 75%,
-      #4f5bd5 100%
-    );
-}
-
-.gh {
-  background:
-    linear-gradient(
-      145deg,
-      #30343a,
-      #111315
-    );
-}
-
-.li {
-  background:
-    linear-gradient(
-      145deg,
-      #1685e6,
-      #07549d
-    );
-}
-
-.ml {
-  background:
-    linear-gradient(
-      145deg,
-      #4aa8ff,
-      #1765e8
-    );
-}
-
-.p1 {
-  background:
-    linear-gradient(
-      145deg,
-      #1fc7bb,
-      #075d6b
-    );
-}
-
-.p2 {
-  background:
-    linear-gradient(
-      145deg,
-      #a483ff,
-      #4724bd
-    );
-}
-
-.p3 {
-  background:
-    linear-gradient(
-      145deg,
-      #38cf78,
-      #116b40
-    );
-}
-
-.p4 {
-  background:
-    linear-gradient(
-      145deg,
-      #ff9b43,
-      #bd3b0d
-    );
-}
-
-.sf {
-  background:
-    linear-gradient(
-      145deg,
-      #67d3ff,
-      #167de7
-    );
-}
-
-.ms {
-  background:
-    linear-gradient(
-      145deg,
-      #5be26f,
-      #20a83a
-    );
-}
-
-
-/* =========================================================
-   SEARCH + DOCK
-   ========================================================= */
-
-.search {
-  position: absolute;
-
-  bottom: 104px;
-
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  font-size: 10.5px;
-
-  padding:
-    5px 16px;
-
-  border-radius: 999px;
-
-  background:
-    rgba(255,255,255,0.13);
-
-  color:
-    rgba(255,255,255,0.75);
-
-  backdrop-filter:
-    blur(12px);
-}
-
-.dock {
-  position: absolute;
-
-  bottom: 16px;
-
-  inset-inline: 14px;
-
-  height: 76px;
-
-  border-radius: 30px;
-
-  background:
-    rgba(255,255,255,0.13);
-
-  backdrop-filter:
-    blur(18px);
-
-  display: flex;
-
-  justify-content:
-    center;
-
-  align-items:
-    center;
-
-  gap: 16px;
-
-  box-shadow:
-    inset 0 0 0 1px
-    rgba(255,255,255,0.08);
-}
-
-.dock .app i {
-  width: 54px;
-  height: 54px;
-}
-
-.home-bar {
-  position: absolute;
-
-  bottom: 6px;
-
-  left: 50%;
-
-  width: 104px;
-
-  height: 4px;
-
-  border-radius: 4px;
-
-  background:
-    rgba(255,255,255,0.7);
-
-  transform:
-    translateX(-50%);
-}
-
-
-/* =========================================================
-   SECOND SECTION TEXT
-   ========================================================= */
-
-.about {
-  max-width: 31rem;
-
-  justify-self: start;
-
-  opacity:
-    clamp(
-      0,
-      calc(var(--t) * 3),
-      1
-    );
-
-  transform:
-    translateY(
-      calc(
-        (1 - var(--t))
-        * 28px
-      )
-    );
-}
-
-.about > * {
-  opacity:
-    clamp(
-      0,
-      calc(
-        var(--t) * 2.4
-        - var(--i) * 0.22
-      ),
-      1
-    );
-}
-
-.section-kicker {
-  display: block;
-
-  margin-bottom: 1rem;
-
-  font:
-    500 0.68rem
-    var(--wide);
-
-  letter-spacing:
-    0.22em;
-
-  color:
-    rgba(255, 133, 62, 0.72);
-}
-
-.about h2 {
-  font:
-    800 clamp(
-      2.1rem,
-      4vw,
-      3.3rem
-    )
-    /
-    0.98
-    var(--display);
-
-  letter-spacing:
-    -0.045em;
-
-  margin:
-    0 0 1.3rem;
-}
-
-.about p {
-  margin:
-    0 0 1rem;
-
-  color:
-    var(--muted);
-
-  max-width:
-    30rem;
-}
-
-.about p a {
-  color:
-    var(--ink);
-
-  text-decoration:
-    none;
-
-  border-bottom:
-    1px solid
-    rgba(255,255,255,0.3);
-
-  padding-bottom: 2px;
-}
-
-
-/* =========================================================
-   CONTACT LIST
-   ========================================================= */
-
-.contact {
-  list-style: none;
-
-  margin:
-    1.8rem 0 0;
-
-  padding: 0;
-
-  border-top:
-    1px solid
-    rgba(255,255,255,0.1);
-}
-
-.contact li {
-  border-bottom:
-    1px solid
-    rgba(255,255,255,0.1);
-}
-
+.island { position: absolute; top: 11px; left: 50%; width: 92px; height: 27px; border-radius: 20px; background: #000; transform: translateX(-50%); }
+.status { position: absolute; top: 15px; inset-inline: 28px; display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 600; }
+
+.widgets { position: absolute; top: 58px; inset-inline: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.wcol { display: grid; gap: 5px; }
+.w { height: 124px; border-radius: 22px; padding: 11px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), 0 8px 25px rgba(0, 0, 0, .25); }
+.w-gh { background: linear-gradient(145deg, #f9f9f9, #dedede); display: grid; place-items: center; }
+.grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; width: 100%; }
+.grid u { aspect-ratio: 1; border-radius: 2.5px; background: #ebedf0; }
+.grid .c1 { background: #9be9a8; } .grid .c2 { background: #40c463; } .grid .c3 { background: #30a14e; } .grid .c4 { background: #216e39; }
+.w-now { background: linear-gradient(150deg, #d85220, #7136c7); display: grid; align-content: space-between; }
+.w-now small { font-size: 9px; letter-spacing: .12em; opacity: .75; }
+.w-now strong { font: 800 15px/1.1 var(--display); }
+.w-now em { font-size: 10px; font-style: normal; opacity: .82; }
+.bar { height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .25); overflow: hidden; }
+.bar i { display: block; width: 72%; height: 100%; background: #fff; border-radius: 4px; }
+.wl { font-size: 10px; text-align: center; color: rgba(255, 255, 255, .72); }
+
+.icons { position: absolute; top: 224px; inset-inline: 14px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 6px; }
+.app { display: grid; justify-items: center; gap: 5px; text-decoration: none; font-size: 9.5px; color: rgba(255, 255, 255, .9); transition: transform .18s ease; }
+@media (hover: hover) { a.app:hover { transform: translateY(-3px) scale(1.06); } }
+.app i { width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; box-shadow: 0 5px 14px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(255, 255, 255, .18); }
+.glyph { font: 800 19px var(--display); color: #fff; }
+
+.ig { background: radial-gradient(circle at 30% 105%, #feda75 0, #fa7e1e 25%, #d62976 50%, #962fbf 75%, #4f5bd5 100%); }
+.gh { background: linear-gradient(145deg, #30343a, #111315); }
+.li { background: linear-gradient(145deg, #1685e6, #07549d); }
+.ml { background: linear-gradient(145deg, #4aa8ff, #1765e8); }
+.p1 { background: linear-gradient(145deg, #1fc7bb, #075d6b); }
+.p2 { background: linear-gradient(145deg, #a483ff, #4724bd); }
+.p3 { background: linear-gradient(145deg, #38cf78, #116b40); }
+.p4 { background: linear-gradient(145deg, #ff9b43, #bd3b0d); }
+.sf { background: linear-gradient(145deg, #67d3ff, #167de7); }
+.ms { background: linear-gradient(145deg, #5be26f, #20a83a); }
+
+.search { position: absolute; bottom: 104px; left: 50%; transform: translateX(-50%); font-size: 10.5px; padding: 5px 16px; border-radius: 999px; background: rgba(255, 255, 255, .13); color: rgba(255, 255, 255, .75); }
+.dock { position: absolute; bottom: 16px; inset-inline: 14px; height: 76px; border-radius: 30px; background: rgba(255, 255, 255, .15); display: flex; justify-content: center; align-items: center; gap: 16px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.home-bar { position: absolute; bottom: 6px; left: 50%; width: 104px; height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .7); transform: translateX(-50%); }
+
+/* text column (opacity / transform written by JS) */
+.about { max-width: 31rem; justify-self: start; opacity: 0; will-change: transform, opacity; }
+.about > * { opacity: 0; }
+.section-kicker { display: block; margin-bottom: 1rem; font: 500 .68rem var(--wide); letter-spacing: .22em; color: rgba(255, 133, 62, .72); }
+.about h2 { font: 800 clamp(2.1rem, 4vw, 3.3rem) / .98 var(--display); letter-spacing: -.045em; margin: 0 0 1.3rem; }
+.about p { margin: 0 0 1rem; color: var(--muted); max-width: 30rem; }
+.about p a { color: var(--ink); text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, .3); padding-bottom: 2px; }
+
+.contact { list-style: none; margin: 1.8rem 0 0; padding: 0; border-top: 1px solid rgba(255, 255, 255, .1); }
+.contact li { border-bottom: 1px solid rgba(255, 255, 255, .1); }
 .contact a {
-  all: unset;
-
-  box-sizing: border-box;
-
-  cursor: pointer;
-
-  width: 100%;
-
-  display: flex;
-
-  justify-content:
-    space-between;
-
-  gap: 1rem;
-
-  padding:
-    0.85rem 0.2rem;
-
-  font:
-    500 0.95rem
-    var(--body);
-
-  transition:
-    padding 0.2s,
-    color 0.2s;
+  all: unset; box-sizing: border-box; cursor: pointer; width: 100%; display: flex; justify-content: space-between; gap: 1rem;
+  padding: .85rem .2rem; font: 500 .95rem var(--body); transition: padding .2s, color .2s;
 }
+@media (hover: hover) { .contact a:hover { padding-inline: .7rem; color: #e7dcff; } }
+.contact a:focus-visible { outline: 2px solid var(--violet); }
+.contact span:first-child { color: var(--muted); }
+.contact span:last-child { text-align: right; overflow-wrap: anywhere; }
 
-.contact a:hover {
-  padding-inline: 0.7rem;
+.footer { text-align: center; padding: 2rem 1rem calc(2rem + env(safe-area-inset-bottom)); color: #766d68; font-size: .8rem; letter-spacing: .04em; }
 
-  color:
-    #e7dcff;
-}
-
-.contact span:first-child {
-  color:
-    var(--muted);
-}
-
-.contact span:last-child {
-  text-align: right;
-
-  overflow-wrap:
-    anywhere;
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.footer {
-  text-align: center;
-
-  padding:
-    2rem 1rem;
-
-  color:
-    #766d68;
-
-  font-size:
-    0.8rem;
-
-  letter-spacing:
-    0.04em;
-}
-
-
-/* =========================================================
-   TABLET / MOBILE
-   ========================================================= */
-
+/* ================= TABLET + PHONE ================= */
 @media (max-width: 860px) {
+  :root { --r: clamp(140px, 50vw, 320px); --man-h: min(100svh, 215vw); --man-top: 5svh; }
+  .hero::before { display: none; }
+  .ch { font-size: calc(var(--r) * .105); letter-spacing: .05em; }
+  .tilt { top: 48%; transform: rotateZ(-8deg) rotateX(-18deg); }
+  .hero-message { bottom: calc(6svh + env(safe-area-inset-bottom)); width: calc(100% - 36px); z-index: 12; }
+  .hero-message h1 { font-size: clamp(3.4rem, 17vw, 5.6rem); }
+  .hero-message p { font-size: .8rem; margin-top: .9rem; }
+  .scroll-indicator { height: 30px; margin-top: 1rem; }
 
-  .man {
-    top: 7svh;
-
-    height:
-      min(105svh, 225vw);
-  }
-
-  :root {
-    --r:
-      clamp(
-        155px,
-        62vw,
-        360px
-      );
-  }
-
-  .hero-message {
-    bottom: 6svh;
-  }
-
-  .hero-message h1 {
-    font-size:
-      clamp(
-        3.5rem,
-        18vw,
-        6rem
-      );
-  }
-
-  .hero-message p {
-    font-size: 0.8rem;
-  }
-
+  .phone-section { height: 250vh; height: 250svh; }
   .sticky {
-    grid-template-columns: 1fr;
-
-    grid-template-rows:
-      50% 50%;
-
-    gap: 0;
-
-    align-items: start;
-
-    padding-block:
-      0.5rem;
+    grid-template-columns: 1fr; grid-template-rows: 46% 54%; gap: 0; align-items: start;
+    padding: 0 20px;
   }
-
-  .phone-scene {
-    height: 100%;
-  }
-
-  .about {
-    justify-self: center;
-
-    align-self: center;
-
-    padding-bottom:
-      1rem;
-
-    width:
-      min(90vw, 500px);
-  }
-
-  .about h2 {
-    font-size:
-      clamp(
-        2rem,
-        9vw,
-        3rem
-      );
-  }
-
-  .contact {
-    margin-top: 1rem;
-  }
+  .phone-scene { width: 100%; height: 100%; perspective: 1400px; }
+  .halo { inset: -90px; opacity: .8; }
+  .about { width: 100%; max-width: 100%; justify-self: center; align-self: start; padding: 6px 0 calc(20px + env(safe-area-inset-bottom)); }
+  .section-kicker { margin-bottom: .7rem; font-size: .58rem; letter-spacing: .18em; white-space: nowrap; }
+  .about h2 { font-size: clamp(2rem, 9.5vw, 2.8rem); line-height: .95; letter-spacing: -.05em; margin: 0 0 .9rem; }
+  .about p { font-size: .88rem; line-height: 1.5; margin: 0 0 .8rem; max-width: 100%; }
+  .hide-m { display: none; }
+  .contact { margin: 1rem 0 0; }
+  .contact a { min-height: 46px; align-items: center; padding: .6rem .15rem; font-size: .82rem; gap: .5rem; }
+  .contact span:last-child { max-width: 64%; }
 }
 
-
-/* =========================================================
-   FINAL MOBILE FIX
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-  html,
-  body,
-  #root {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
-
-  /* -------------------------------------------------------
-     HERO
-     ------------------------------------------------------- */
-
-  .hero {
-    height: 100svh;
-    min-height: 620px;
-
-    overflow: hidden;
-  }
-
-
-  /* -------------------------------------------------------
-     HEADER
-     ------------------------------------------------------- */
-
-  .top {
-    padding:
-      1.2rem
-      1.1rem;
-
-    z-index: 30;
-  }
-
-  .brand {
-    font-size: 0.92rem;
-  }
-
-  .top-link {
-    font-size: 0.85rem;
-
-    padding:
-      0.38rem 0.85rem;
-  }
-
-
-  /* -------------------------------------------------------
-     MAN
-     ------------------------------------------------------- */
-
-  .man {
-    top: 5svh;
-
-    /*
-     * This is deliberately smaller than the old mobile
-     * setting so the head and shoulders don't dominate
-     * the entire viewport.
-     */
-    height:
-      min(94svh, 205vw);
-
-    max-width: none;
-  }
-
-
-  /* -------------------------------------------------------
-     ORBIT
-     ------------------------------------------------------- */
-
-  :root {
-    --r:
-      clamp(
-        150px,
-        57vw,
-        250px
-      );
-  }
-
-  .tilt {
-    left: 50%;
-    top: 48%;
-
-    transform:
-      rotateZ(-8deg)
-      rotateX(-18deg);
-  }
-
-  .seg {
-    width:
-      calc(var(--r) * 0.028);
-
-    height:
-      calc(var(--r) * 0.18);
-  }
-
-  .ch {
-    font-size:
-      calc(var(--r) * 0.075);
-
-    letter-spacing:
-      0.045em;
-  }
-
-
-  /* -------------------------------------------------------
-     HERO MESSAGE
-     ------------------------------------------------------- */
-
-  .hero-message {
-    left: 50%;
-
-    bottom: 6svh;
-
-    width:
-      calc(100% - 36px);
-
-    z-index: 12;
-  }
-
-  .hero-message h1 {
-    font-size:
-      clamp(
-        3.35rem,
-        17vw,
-        5.2rem
-      );
-
-    line-height:
-      0.82;
-
-    letter-spacing:
-      -0.07em;
-  }
-
-  .hero-message p {
-    margin-top:
-      0.9rem;
-
-    font-size:
-      0.76rem;
-  }
-
-  .scroll-indicator {
-    height: 30px;
-
-    margin-top:
-      1rem;
-  }
-
-
-  /* =======================================================
-     SECOND SECTION
-     ======================================================= */
-
-  .phone-section {
-    height: 250svh;
-
-    /*
-     * Keep these as defaults.
-     * The phone-rig transform below is intentionally
-     * overridden on mobile because JS controls the desktop
-     * animation variables.
-     */
-    --ty: 0;
-    --rx: 8;
-    --ry: -14;
-    --sc: 0.58;
-    --ps: 1;
-  }
-
-
-  /* -------------------------------------------------------
-     STICKY MOBILE LAYOUT
-     ------------------------------------------------------- */
-
-  .sticky {
-    height: 100svh;
-
-    display: grid;
-
-    grid-template-columns:
-      1fr;
-
-    grid-template-rows:
-      44% 56%;
-
-    gap: 0;
-
-    padding:
-      0 20px;
-
-    align-items: start;
-
-    overflow: hidden;
-  }
-
-
-  /* -------------------------------------------------------
-     PHONE AREA
-     ------------------------------------------------------- */
-
-  .phone-scene {
-    width: 100%;
-    height: 100%;
-
-    display: grid;
-
-    place-items: center;
-
-    perspective:
-      1600px;
-
-    perspective-origin:
-      50% 45%;
-
-    overflow: visible;
-  }
-
-
-  /*
-   * IMPORTANT:
-   *
-   * On desktop, JavaScript moves the phone vertically
-   * using --ty.
-   *
-   * On mobile, that desktop movement would push the
-   * phone completely out of the viewport.
-   *
-   * Therefore we intentionally use a fixed mobile
-   * transform here.
-   */
-  .phone-rig {
-    width: 300px;
-    height: 620px;
-
-    transform:
-      translateY(-18px)
-      scale(0.52)
-      rotateX(8deg)
-      rotateY(-14deg) !important;
-
-    transform-origin:
-      center center;
-
-    flex-shrink: 0;
-  }
-
-
-  /*
-   * Keep the phone itself at its original size.
-   * We scale the RIG, not the phone.
-   */
-  .phone {
-    position: absolute;
-
-    inset: 0;
-
-    width: 300px;
-    height: 620px;
-  }
-
-
-  /* smaller halo so it doesn't wash over the text */
-
-  .halo {
-    inset: -100px;
-
-    opacity: 0.75;
-  }
-
-
-  /* -------------------------------------------------------
-     ABOUT CONTENT
-     ------------------------------------------------------- */
-
-  .about {
-    width: 100%;
-    max-width: 100%;
-
-    justify-self: center;
-    align-self: start;
-
-    padding:
-      10px 0 24px;
-
-    position: relative;
-
-    z-index: 8;
-  }
-
-  .section-kicker {
-    margin-bottom:
-      0.75rem;
-
-    font-size:
-      0.58rem;
-
-    letter-spacing:
-      0.18em;
-
-    white-space: nowrap;
-  }
-
-  .about h2 {
-    margin:
-      0 0 1rem;
-
-    font-size:
-      clamp(
-        2rem,
-        9.5vw,
-        2.8rem
-      );
-
-    line-height:
-      0.95;
-
-    letter-spacing:
-      -0.05em;
-  }
-
-  .about p {
-    margin:
-      0 0 0.85rem;
-
-    font-size:
-      0.88rem;
-
-    line-height:
-      1.52;
-
-    max-width: 100%;
-  }
-
-
-  /* -------------------------------------------------------
-     CONTACT LINKS
-     ------------------------------------------------------- */
-
-  .contact {
-    width: 100%;
-
-    margin:
-      1.15rem 0 0;
-  }
-
-  .contact a {
-    min-height: 48px;
-
-    padding:
-      0.72rem 0.15rem;
-
-    font-size:
-      0.82rem;
-
-    gap:
-      0.5rem;
-  }
-
-  .contact a:hover {
-    padding-inline:
-      0.15rem;
-  }
-
-  .contact span:last-child {
-    max-width: 62%;
-
-    text-align: right;
-
-    overflow-wrap:
-      anywhere;
-  }
-
-
-  /* -------------------------------------------------------
-     FOOTER
-     ------------------------------------------------------- */
-
-  .footer {
-    padding:
-      1.5rem 1rem;
-
-    font-size:
-      0.7rem;
-  }
+@media (max-width: 400px), (max-height: 700px) and (max-width: 860px) {
+  .hide-s { display: none; }
+  .about h2 { font-size: 1.9rem; margin-bottom: .7rem; }
+  .contact a { min-height: 42px; font-size: .78rem; }
+  .hero-message h1 { font-size: 3.2rem; }
 }
 
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 390px) {
-
-  .hero {
-    min-height: 600px;
-  }
-
-  .top {
-    padding:
-      1rem;
-  }
-
-  .brand {
-    font-size:
-      0.86rem;
-  }
-
-  .top-link {
-    font-size:
-      0.8rem;
-
-    padding:
-      0.35rem 0.75rem;
-  }
-
-
-  /* hero image */
-
-  .man {
-    top: 5svh;
-
-    height:
-      min(90svh, 205vw);
-  }
-
-
-  /* orbit */
-
-  :root {
-    --r:
-      142px;
-  }
-
-  .ch {
-    font-size:
-      calc(var(--r) * 0.073);
-
-    letter-spacing:
-      0.04em;
-  }
-
-
-  /* hero text */
-
-  .hero-message {
-    width:
-      calc(100% - 30px);
-
-    bottom:
-      5.5svh;
-  }
-
-  .hero-message h1 {
-    font-size:
-      3.25rem;
-  }
-
-  .hero-message p {
-    font-size:
-      0.72rem;
-  }
-
-
-  /* second section */
-
-  .sticky {
-    grid-template-rows:
-      43% 57%;
-
-    padding-inline:
-      17px;
-  }
-
-  .phone-rig {
-    transform:
-      translateY(-12px)
-      scale(0.47)
-      rotateX(8deg)
-      rotateY(-14deg) !important;
-  }
-
-  .about {
-    padding-top:
-      6px;
-  }
-
-  .section-kicker {
-    font-size:
-      0.54rem;
-  }
-
-  .about h2 {
-    font-size:
-      1.95rem;
-  }
-
-  .about p {
-    font-size:
-      0.84rem;
-
-    line-height:
-      1.48;
-  }
-
-  .contact {
-    margin-top:
-      0.9rem;
-  }
-
-  .contact a {
-    font-size:
-      0.78rem;
-
-    min-height:
-      44px;
-  }
+@media (max-width: 860px) and (orientation: landscape) {
+  .sticky { grid-template-columns: 1fr 1fr; grid-template-rows: none; align-items: center; }
+  .hide-m, .hide-s { display: none; }
 }
-
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-
-  html {
-    scroll-behavior: auto;
-  }
-
-  .ring,
-  .curtain,
-  .scroll-indicator span {
-    animation: none;
-  }
-
-  .curtain {
-    display: none;
-  }
-
-  .tilt-m {
-    transition: none;
-  }
+  html { scroll-behavior: auto; }
+  .ring, .curtain, .scroll-indicator span { animation: none; }
+  .curtain { display: none; }
+  .tilt-m { transition: none; }
 }
